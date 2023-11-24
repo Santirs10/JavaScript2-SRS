@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COOKIES FORM</title>
+</head>
+<body>
+
+    <h2>Formulario SantiagoRodriguezSanchez</h2>
+    <form id="miFormulario">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required><br>
+        <label for="nombre">Email:</label>
+        <input type="text" id="email" name="email" required><br>
+
+        <label>Género:</label>
+        <input type="radio" id="masculino" name="genero" value="masculino" checked>
+        <label for="masculino">Masculino</label>
+        <input type="radio" id="femenino" name="genero" value="femenino">
+        <label for="femenino">Femenino</label><br>
+        <input type="radio" id="otro" name="genero" value="otro">
+        <label for="femenino">Otro</label><br>
+
+        <label>Deporte Favorito:</label>
+        <input type="checkbox" id="futbol" name="deportes" value="Fútbol">
+        <label for="futbol">Fútbol</label>
+        <input type="checkbox" id="tenis" name="deportes" value="Tenis">
+        <label for="tenis">Tenis</label>
+        <input type="checkbox" id="baloncesto" name="deportes" value="Baloncesto">
+        <label for="baloncesto">Baloncesto</label><br>
+        <input type="checkbox" id="otro" name="deportes" value="Otro">
+        <label for="otro">Otro</label><br>
+        <input type="submit" value="Enviar">
+    </form>
+    <button onclick="CLICK()"></button>
+    <script>
+        document.getElementById("miFormulario").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+          
+            var nombre = document.getElementById("nombre").value;
+            var genero = document.querySelector('input[name="genero"]:checked').value;
+
+            var hobbies = [];
+            var checkboxes = document.querySelectorAll('input[name="hobbies"]:checked');
+            checkboxes.forEach(function(checkbox) {
+                hobbies.push(checkbox.value);
+            });
+
+            // Crea un objeto JSON con los datos del formulario
+            var formData = {
+                "nombre": nombre,
+                "genero": genero,
+                "hobbies": hobbies
+            };
+
+            // Convierte el objeto JSON a una cadena
+            var formDataJSON = JSON.stringify(formData);
+
+            // Guarda la cadena JSON en una cookie llamada "formData"
+            document.cookie = "formData=" + formDataJSON;
+
+            // Recupera la cookie y muestra los datos en un alert
+            var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)formData\s*=\s*([^;]*).*$)|^.*$/, "$1");
+            var parsedData = JSON.parse(cookieValue);
+
+            // Muestra los datos en un alert
+            alert("Datos del formulario:\n" + JSON.stringify(parsedData, null, 2));
+        });
+        function CLICK(){
+            console.log(JSON.stringify(parsedData, null, 2));
+        }
+    </script>
+
+</body>
+</html>
